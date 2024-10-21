@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ingresos y Gastos</title>
+    <style>
+        /* Fuentes y colores */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #1cc88a;
+            --danger-color: #e74a3b;
+            --bg-color: #f8f9fc;
+            --white-color: #fff;
+            --text-color: #5a5c69;
+        }
+
+        /* Estilo general del cuerpo */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Encabezados principales */
+        h1 {
+            text-align: center;
+            color: var(--white-color);
+            margin: 30px 0 10px;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin: 10px 0 20px;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        /* Contenedores principales */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        form {
+            background: var(--white-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        form:hover {
+            transform: scale(1.02);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: #f1f2f6;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            background-color: #dfe6e9;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Tabla de transacciones */
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background: var(--white-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        th {
+            background: var(--primary-color);
+            color: var(--white-color);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: #dfe6e9;
+        }
+
+        td button {
+            background-color: var(--danger-color);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            color: var(--white-color);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        td button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Saldo total */
+        .saldo {
+            text-align: center;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            form, table {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .saldo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Registro de Ingresos y Gastos</h1>
+
+    <div class="container">
+        <h2>Agregar Ingreso</h2>
+        <form id="incomeForm">
+            <input type="date" id="incomeDate" required>
+            <input type="text" id="incomeDescription" placeholder="Descripción del ingreso" required>
+            <input type="number" id="incomeAmount" placeholder="Monto del ingreso ($)" step="0.01" required>
+            <button type="submit">Agregar Ingreso</button>
+        </form>
+
+        <h2>Agregar Gasto</h2>
+        <form id="expenseForm">
+            <input type="date" id="expenseDate" required>
+            <select id="expenseCategory" required>
+                <option value="">Selecciona una categoría</option>
+                <option value="Alimentación">Alimentación</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Entretenimiento">Entretenimiento</option>
+                <option value="Salud">Salud</option>
+                <option value="Otros">Otros</option>
+            </select>
+            <input type="text" id="expenseDescription" placeholder="Descripción del gasto" required>
+            <input type="number" id="expenseAmount" placeholder="Monto del gasto ($)" step="0.01" required>
+            <button type="submit">Agregar Gasto</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Categoría / Descripción</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="transactionTableBody"></tbody>
+        </table>
+
+        <div class="saldo">
+            Saldo Total: $<span id="totalBalance">0.00</span>
+        </div>
+    </div>
+
+    <script>
+        let totalBalance = 0;
+        const transactionTableBody = document.getElementById('transactionTableBody');
+        const totalBalanceDisplay = document.getElementById('totalBalance');
+        const incomeDate = document.getElementById('incomeDate');
+        const expenseDate = document.getElementById('expenseDate');
+
+        function setCurrentDate(input) {
+            const today = new Date().toISOString().split('T')[0];
+            input.value = today;
+        }
+
+        setCurrentDate(incomeDate);
+        setCurrentDate(expenseDate);
+
+        document.getElementById('incomeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const date = incomeDate.value;
+            const description = document.getElementById('incomeDescription').value;
+            const amount = parseFloat(document.getElementById('incomeAmount').value);
+            addTransaction('Ingreso', description, date, amount);
+            updateBalance(amount);
+            this.reset();
+            setCurrentDate(incomeDate);
+        });
+
+        document.getElementById('expenseForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const date = expenseDate.value;
+            const category = document.getElementById('expenseCategory').value;
+            const description = document.getElementById('expenseDescription').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
+            addTransaction('Gasto', `${category}: ${description}`, date, -amount);
+            updateBalance(-amount);
+            this.reset();
+            setCurrentDate(expenseDate);
+        });
+
+        function addTransaction(type, detail, date, amount) {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${date}</td><td>${type}</td><td>${detail}</td><td>$${Math.abs(amount).toFixed(2)}</td><td><button onclick="deleteTransaction(this, ${amount})">Eliminar</button></td>`;
+            transactionTableBody.appendChild(row);
+        }
+
+        function updateBalance(amount) {
+            totalBalance += amount;
+            totalBalanceDisplay.textContent = totalBalance.toFixed(2);
+        }
+
+        function deleteTransaction(button, amount) {
+            button.parentElement.parentElement.remove();
+            updateBalance(-amount);
+        }
+    </script>
+
+</body>
+</html>
